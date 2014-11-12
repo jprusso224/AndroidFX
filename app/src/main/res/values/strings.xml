@@ -5,4 +5,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="effect_1">Effect 1</string>
+    <string name="effect_2">Effect 2</string>
+    <string name="effect_3">Effect 2</string>
 </resources>
