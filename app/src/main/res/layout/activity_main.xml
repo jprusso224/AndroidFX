@@ -18,7 +18,8 @@
         android:layout_marginTop="54dp"
         android:layout_below="@+id/textView"
         android:layout_alignLeft="@+id/effect_2_btn"
-        android:layout_alignStart="@+id/effect_2_btn" />
+        android:layout_alignStart="@+id/effect_2_btn"
+        android:onClick="startEffect1" />
 
     <Button
         android:layout_width="wrap_content"
@@ -27,7 +28,8 @@
         android:id="@+id/effect_2_btn"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/effect_3_btn"
-        android:layout_alignStart="@+id/effect_3_btn" />
+        android:layout_alignStart="@+id/effect_3_btn"
+        android:onClick="startEffect2"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -36,6 +38,7 @@
         android:id="@+id/effect_3_btn"
         android:layout_marginBottom="79dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="startEffect3"/>
 
 </RelativeLayout>

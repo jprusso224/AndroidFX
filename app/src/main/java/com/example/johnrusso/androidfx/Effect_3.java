@@ -2,36 +2,23 @@ package com.example.johnrusso.androidfx;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.*;
-import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class MainActivity extends ActionBarActivity {
+
+public class Effect_3 extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-    public void startEffect1(View view){
-        Intent intent = new Intent(this, Effect_1.class);
-        startActivity(intent);
-}
-
-    public void startEffect2(View view){
-        Intent intent = new Intent(this, Effect_2.class);
-        startActivity(intent);
-    }
-
-    public void startEffect3(View view){
-        Intent intent = new Intent(this, Effect_3.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_effect_3);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_effect_3, menu);
         return true;
     }
 

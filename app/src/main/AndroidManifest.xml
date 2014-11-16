@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.johnrusso.androidfx" >
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name="com.example.johnrusso.androidfx.MainActivity"
             android:label="@string/app_name" >
@@ -15,6 +17,30 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.johnrusso.androidfx.Effect_1"
+            android:label="@string/title_activity_effect_1"
+            android:parentActivityName="com.example.johnrusso.androidfx.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.johnrusso.androidfx.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.johnrusso.androidfx.Effect_2"
+            android:label="@string/title_activity_effect_2"
+            android:parentActivityName="com.example.johnrusso.androidfx.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.johnrusso.androidfx.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.johnrusso.androidfx.Effect_3"
+            android:label="@string/title_activity_effect_3"
+            android:parentActivityName="com.example.johnrusso.androidfx.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.johnrusso.androidfx.MainActivity" />
         </activity>
     </application>
 

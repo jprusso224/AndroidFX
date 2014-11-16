@@ -7,4 +7,8 @@
     <string name="effect_1">Effect 1</string>
     <string name="effect_2">Effect 2</string>
     <string name="effect_3">Effect 2</string>
+    <string name="title_activity_effect_1">Effect_1</string>
+    <string name="title_activity_effect_2">Effect_2</string>
+    <string name="title_activity_effect_3">Effect_3</string>
+
 </resources>
