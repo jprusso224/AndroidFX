@@ -1,5 +1,6 @@
 package com.example.johnrusso.androidfx;
 
+import android.media.audiofx.Equalizer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.*;
 import android.view.Menu;
@@ -78,12 +79,12 @@ public class Effect_1 extends ActionBarActivity {
             short[] buffer = new short[bufferSize];
             audioRecord.startRecording();
 
-            long temptime = 10;
-            while (temptime > 0) {
+            long tempTime = bufferSize/4;
+            while (tempTime > 0) {
                 int bufferReadResult = audioRecord.read(buffer, 0, bufferSize);
                 for (int i = 0; i < bufferReadResult; i++)
                     dos.writeShort(buffer[i]);
-                temptime--;
+                tempTime--;
             }
 
             audioRecord.stop();
@@ -112,7 +113,14 @@ public class Effect_1 extends ActionBarActivity {
             // Read the file into the music array.
             int i = 0;
             while (dis.available() > 0) {
-                music[musicLength-1-i] = dis.readShort();
+              //  music[musicLength-1-i] = dis.readShort();
+                music[i] = dis.readShort();
+
+                //Clip audio
+                if (music[i] > 1000) music[i] = 1000;
+                if (music[i] < -1000) music[i] = -1000;
+
+              //  Log.d("ADebugTag", "Value: " + Short.toString(music[i]));
                 i++;
             }
 
@@ -129,6 +137,16 @@ public class Effect_1 extends ActionBarActivity {
                     AudioFormat.ENCODING_PCM_16BIT,
                     musicLength,
                     AudioTrack.MODE_STREAM);
+
+            //This equalizer should filter out the high frequencies caused from clipping
+            Equalizer lowPassFilter = new Equalizer(0,audioTrack.getAudioSessionId());
+            lowPassFilter.setEnabled(true);
+            short numBands = lowPassFilter.getNumberOfBands();
+            short startFilter = 1/4;
+            short j = 0;
+            for(j = (short)(startFilter*numBands); j < numBands; j++) {
+                lowPassFilter.setBandLevel(j,(short)-50000);
+            }
             // Start playback
             audioTrack.play();
 
