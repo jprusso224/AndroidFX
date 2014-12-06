@@ -1,3 +1,4 @@
+
 package com.example.johnrusso.androidfx;
 
 import android.media.audiofx.Equalizer;
@@ -10,45 +11,35 @@ import android.media.*;
 import java.io.*;
 import java.lang.*;
 
-
-
+/**
+ * Activity for the distortion effect
+ * <p>
+ * This activity records a buffer of audio from the microphone, applies the signal processing
+ * to distort the audio and then plays the audio back through the speakers. The record and play back
+ * functionality was modified from http://eurodev.blogspot.com/2009/09/raw-audio-manipulation-in-android.html
+ *
+ */
 public class Effect_1 extends ActionBarActivity {
 
     private boolean isRecording = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_effect_1);
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                record();
-            }
-        });
-        thread.start();
 
-
-      /*  try {
-          //  thread.wait(10000);
-        } catch (InterruptedException e) {}
-*/
-        isRecording = false;
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {}
-
-        play();
-        //finish();
     }
 
-
-
+    /**
+     * Records 16-bit PCM audio at a frequency of 11025Hz to a file on the Android external storage device.
+     * This record method uses the minimum buffer size.
+     */
     public void record() {
         int frequency = 11025;
         int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
         int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
 
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/reverseme.pcm");
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/distort.pcm");
 
         isRecording = true;
 
@@ -65,7 +56,7 @@ public class Effect_1 extends ActionBarActivity {
         }
 
         try {
-            // Create a DataOuputStream to write the audio data into the saved file.
+            // Create a DataOutputStream to write the audio data into the saved file.
             OutputStream os = new FileOutputStream(file);
             BufferedOutputStream bos = new BufferedOutputStream(os);
             DataOutputStream dos = new DataOutputStream(bos);
@@ -79,6 +70,7 @@ public class Effect_1 extends ActionBarActivity {
             short[] buffer = new short[bufferSize];
             audioRecord.startRecording();
 
+            //Record for 1/4 buffer size
             long tempTime = bufferSize/4;
             while (tempTime > 0) {
                 int bufferReadResult = audioRecord.read(buffer, 0, bufferSize);
@@ -95,6 +87,10 @@ public class Effect_1 extends ActionBarActivity {
         }
     }
 
+    /**
+     * This function applies a distortion algorithm to the recorded audio and then plays it through
+     * the Android speakers
+     */
     public void play() {
         // Get the file we want to playback.
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/reverseme.pcm");
@@ -142,7 +138,7 @@ public class Effect_1 extends ActionBarActivity {
             Equalizer lowPassFilter = new Equalizer(0,audioTrack.getAudioSessionId());
             lowPassFilter.setEnabled(true);
             short numBands = lowPassFilter.getNumberOfBands();
-            short startFilter = 1/4;
+            short startFilter = 2/4;
             short j = 0;
             for(j = (short)(startFilter*numBands); j < numBands; j++) {
                 lowPassFilter.setBandLevel(j,(short)-50000);
@@ -159,7 +155,33 @@ public class Effect_1 extends ActionBarActivity {
         }
     }
 
+    /**
+     * Called when the start button is clicked, this method calls the record method
+     */
+    public void startRecording(){
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                isRecording = true;
+                record();
+            }
+        });
+        thread.start();
+        isRecording = false;
 
+        try {
+            thread.join();
+        } catch (InterruptedException e) {}
+    }
+
+    /**
+     * Called when the Play button is clicked, this method calls the play method.
+     * Can only call play is recording is finished.
+     */
+    public void playDistortion(){
+        if(!isRecording) {
+            play();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+
     public void startEffect1(View view){
         Intent intent = new Intent(this, Effect_1.class);
         startActivity(intent);
