@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/start_btn"
-        android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
         android:onClick="startProcessing"/>
@@ -20,11 +19,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop"
+        android:text="Play"
         android:id="@+id/stop_btn"
         android:layout_below="@+id/start_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="107dp"
-        android:onClick="stopProcessing"/>
+        android:onClick="playProcessing"/>
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.media.*;
 import java.io.*;
 import java.lang.*;
 
+
 /**
  * Activity for the distortion effect
  * <p>
@@ -22,22 +23,40 @@ import java.lang.*;
 public class Effect_1 extends ActionBarActivity {
 
     private boolean isRecording = false;
+    private int frequency = 11025;
+    private int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    private int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
+    Thread thread = new Thread(new Runnable() {
+        public void run() {
+            isRecording = true;
+            record(frequency,channelConfiguration,audioEncoding);
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_effect_1);
 
+        thread.start();
+        isRecording = false;
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {}
+
+        play();
     }
 
     /**
-     * Records 16-bit PCM audio at a frequency of 11025Hz to a file on the Android external storage device.
+     * Records 16-bit PCM audio at a given sample frequency to a file on the Android external storage device.
      * This record method uses the minimum buffer size.
+     *
+     * @param frequency Frequency to sample audio
+     * @param channelConfig Audio channel configuration
+     * @param audioEncoding Audio encoding type (wav,pcm,etc...)
      */
-    public void record() {
-        int frequency = 11025;
-        int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
-        int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;
+    public void record(int frequency, int channelConfig, int audioEncoding) {
 
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/distort.pcm");
 
@@ -62,9 +81,9 @@ public class Effect_1 extends ActionBarActivity {
             DataOutputStream dos = new DataOutputStream(bos);
 
             // Create a new AudioRecord object to record the audio.
-            int bufferSize = AudioRecord.getMinBufferSize(frequency, channelConfiguration, audioEncoding);
+            int bufferSize = AudioRecord.getMinBufferSize(frequency, channelConfig, audioEncoding);
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    frequency, channelConfiguration,
+                    frequency, channelConfig,
                     audioEncoding, bufferSize);
 
             short[] buffer = new short[bufferSize];
@@ -93,7 +112,7 @@ public class Effect_1 extends ActionBarActivity {
      */
     public void play() {
         // Get the file we want to playback.
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/reverseme.pcm");
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/distort.pcm");
         // Get the length of the audio stored in the file (16 bit so 2 bytes per short)
         // and create a short array to store the recorded audio.
         int musicLength = (int)(file.length()/2);
@@ -115,15 +134,11 @@ public class Effect_1 extends ActionBarActivity {
                 //Clip audio
                 if (music[i] > 1000) music[i] = 1000;
                 if (music[i] < -1000) music[i] = -1000;
-
-              //  Log.d("ADebugTag", "Value: " + Short.toString(music[i]));
                 i++;
             }
 
-
             // Close the input streams.
             dis.close();
-
 
             // Create a new AudioTrack object using the same parameters as the AudioRecord
             // object used to create the file.
@@ -149,28 +164,20 @@ public class Effect_1 extends ActionBarActivity {
             // Write the music buffer to the AudioTrack object
             audioTrack.write(music, 0, musicLength);
 
-
         } catch (Throwable t) {
             Log.e("AudioTrack","Playback Failed");
         }
+        // delete file when finished
+        file.delete();
     }
 
     /**
      * Called when the start button is clicked, this method calls the record method
+     * <p>
+     * Currently unable to have buttons start effects
      */
     public void startRecording(){
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                isRecording = true;
-                record();
-            }
-        });
-        thread.start();
-        isRecording = false;
 
-        try {
-            thread.join();
-        } catch (InterruptedException e) {}
     }
 
     /**
@@ -179,7 +186,7 @@ public class Effect_1 extends ActionBarActivity {
      */
     public void playDistortion(){
         if(!isRecording) {
-            play();
+            //play();
         }
     }
 
