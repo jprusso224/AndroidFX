@@ -16,12 +16,12 @@ For CSCI 3308 by John, Cameron & David.
 ###Running the Unit Tests
 
 
-###Other Info
+
 #####Link to VCS Repositories
-*AndroidFX (Source Code & Completed Project)
-  *https://github.com/jprusso224/AndroidFX
-*Integration Testing (Test Cases)
-  *https://github.com/jprusso224/MatlabEffects
-*Practice Repositories 
-  *https://github.com/dsolomon/CSCI3308
-  *https://github.com/dsolomon/AndroidAudio
+* AndroidFX (Source Code & Completed Project)
+  * https://github.com/jprusso224/AndroidFX
+* Integration Testing (Test Cases)
+  * https://github.com/jprusso224/MatlabEffects
+* Practice Repositories 
+  * https://github.com/dsolomon/CSCI3308
+  * https://github.com/dsolomon/AndroidAudio
