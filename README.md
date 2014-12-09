@@ -7,6 +7,7 @@ AndroidFX
 ###Repository Organization
 1. Source Java files for audio processing under AndroidFX/app/src/main/java/com/example/johnrusso/androidfx/
 2. XML files for UI under AndroidFX/app/src/main/res/layout/
+3. Javadoc autodocumentation under AndroidFX/app/docs/. 
 
 ###Build Prerequisites
 1. Install Android Studio w/ latest SDK and optional tools.
