@@ -28,6 +28,3 @@ AndroidFX
   * https://github.com/jprusso224/AndroidFX
 * Integration Testing (Test Cases)
   * https://github.com/jprusso224/MatlabEffects
-* Practice Repositories 
-  * https://github.com/dsolomon/CSCI3308
-  * https://github.com/dsolomon/AndroidAudio
