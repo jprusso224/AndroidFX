@@ -3,6 +3,10 @@ AndroidFX
 An android app to simulate a guitar effects pedal. 
 For CSCI 3308 by John Russo, Cameron Comeau & David Solomon.
 
+###Repository Organization
+1. Source Java files for audio processing under AndroidFX/app/src/main/java/com/example/johnrusso/androidfx/
+2. XML files for UI under AndroidFX/app/src/main/res/layout/
+
 ###Build Prerequisites
 1. Install Android Studio w/ latest SDK and optional tools.
 2. Install Java 1.7 and configure your Path properly.
