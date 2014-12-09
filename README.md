@@ -1,7 +1,7 @@
 AndroidFX 
 =========
 An android app to simulate a guitar effects pedal. 
-For CSCI 3308 by John, Cameron & David.
+For CSCI 3308 by John Russo, Cameron Comeau & David Solomon.
 
 ###Build Prerequisites
 1. Install Android Studio w/ latest SDK and optional tools.
