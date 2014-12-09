@@ -1,4 +1,4 @@
-
+/*
 package com.example.johnrusso.androidfx;
 
 import android.media.audiofx.Equalizer;
@@ -11,7 +11,7 @@ import android.media.*;
 import java.io.*;
 import java.lang.*;
 
-
+*/
 /**
  * Activity for the distortion effect
  * <p>
