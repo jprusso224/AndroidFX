@@ -11,10 +11,10 @@ import java.io.*;
 import java.lang.*;
 
 /**
- * Activity for the flanger effect
+ * Activity for the delay effect
  * <p>
  * This activity records a buffer of audio from the microphone, applies the signal processing
- * to apply flanging to the audio and then plays the audio back through the speakers. The record and play back
+ * to apply delay to the audio and then plays the audio back through the speakers. The record and play back
  * functionality was modified from http://eurodev.blogspot.com/2009/09/raw-audio-manipulation-in-android.html
  *
  */
@@ -34,7 +34,7 @@ public class Effect_2 extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_effect_1);
+        setContentView(R.layout.activity_effect_2);
 
         thread.start();
         isRecording = false;
@@ -105,7 +105,7 @@ public class Effect_2 extends ActionBarActivity {
     }
 
     /**
-     * This function calls the flange function and then plays the processed audio back to the user.
+     * This function calls the delay function and then plays the processed audio back to the user.
      */
     public void play() {
         // Get the file we want to playback.
@@ -129,10 +129,10 @@ public class Effect_2 extends ActionBarActivity {
                 i++;
             }
 
-            // Apply flanger to audio
-            double delayRate = 1;
-            double delayTime =0.003; //ms
-            short[] processedAudio = applyFlanger(delayTime,delayRate,music,musicLength);
+            // Apply delay to audio
+
+            double delayTime =0.300; //ms
+            short[] processedAudio = applyDelay(delayTime,music,musicLength);
 
             // Close the input streams.
             dis.close();
@@ -160,50 +160,39 @@ public class Effect_2 extends ActionBarActivity {
     }
 
     /**
-     * This method applies a flanging algorithm to an array of audio.
+     * This method applies a delay algorithm to an array of audio. It works by simply copying the
+     * array elements and adding them back to the array at a position of a given delay offset.
      *
-     * @param delayTime Delay time for the flanger in ms
-     * @param flangeRate Frequency of oscillations of the sine wave
+     * @param delayTime Delay time for the delay in ms
      * @param music Audio array to be processed
      * @param musicLength Length of audio array to be processed
      * @return Returns the processed audio array
      */
-    public short[] applyFlanger(double delayTime,double flangeRate, short music[] ,int musicLength){
+    public short[] applyDelay(double delayTime, short music[] ,int musicLength){
 
         int maxSampleDelay = (int)(frequency*delayTime);
         double amplitude = 0.7;
-        double[] sinReference = new double[musicLength];
+        double delayAmplitude = 0.4;
         short[] processedMusic = new short[musicLength];
 
         try {
-            try {
-                // Create a sine reference array to create an oscillating delay
-                for (int i = 0; i <= musicLength; i++) {
-                    sinReference[i] = Math.sin(2 * Math.PI * i * flangeRate /(double)frequency);
-                }
-            }catch(Throwable throwable){
-                Log.e("Flanger","Sine Reference Failed");
-            }
-
             // Don't want to use negative samples
             for (int i = 0; i <= maxSampleDelay; i++) {
                 processedMusic[i] = music[i];
             }
 
             try {
-                // Apply flanging using the reference sine array
-                double sinCurrent;
-                int currentDelay;
+                // Apply delay.
                 for (int i = maxSampleDelay; i <= musicLength; i++) {
-                    sinCurrent = Math.abs(sinReference[i]);
-                    currentDelay = (int) Math.ceil(sinCurrent * maxSampleDelay);
-                    processedMusic[i] = (short) (amplitude * (music[i] + music[i - currentDelay]));
+
+                    processedMusic[i] = (short) (amplitude * (music[i] + music[i - maxSampleDelay]));
+                    processedMusic[i] = (short) (delayAmplitude * (processedMusic[i] + processedMusic[i - maxSampleDelay]));
                 }
             }catch(Throwable throwable){
-                Log.e("Flanger","Algorithm Failed");
+                Log.e("Delay","Algorithm Failed");
             }
         }catch(Throwable throwable){
-            Log.e("Flanger","Flanger Failed");
+            Log.e("Delay","Delay Failed");
         }
 
         return processedMusic;
