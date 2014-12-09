@@ -14,7 +14,8 @@ For CSCI 3308 by John, Cameron & David.
 3. Run in the emulator, on an android phone or GenyMotion. 
 
 ###Running the Unit Tests
-
+1. Clone the Integration Testing repository listed below.
+2. Import code into Matlab and run.
 
 
 #####Link to VCS Repositories
