@@ -1,7 +1,8 @@
 AndroidFX 
 =========
-An android app to simulate a guitar effects pedal. 
-For CSCI 3308 by John Russo, Cameron Comeau & David Solomon.
+* An android app to simulate a guitar effects pedal. 
+* For CSCI 3308
+* By John Russo, Cameron Comeau & David Solomon.
 
 ###Repository Organization
 1. Source Java files for audio processing under AndroidFX/app/src/main/java/com/example/johnrusso/androidfx/
